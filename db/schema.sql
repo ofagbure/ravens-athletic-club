@@ -1,8 +1,8 @@
-DROP DATABASE if exists HawksAthletics;
+DROP DATABASE if exists RavensAthleticClub;
 
-CREATE DATABASE HawksAthletics;
+CREATE DATABASE RavensAthleticClub;
 
-USE HawksAthletics;
+USE RavensAthleticClub;
 
 DROP TABLE if exists UserProfiles;
 
