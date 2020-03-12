@@ -9,9 +9,10 @@ form.login {
   height: 450px;
   width: 400px;
   right: 350px;
+  top: -10px;
   font-size: 18px;
   color: antiquewhite;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-left: 60px;
   box-shadow: rgba(0, 0, 0, 0.3) 4px 1px 20px 4px;
   border-radius: 5px;
@@ -54,17 +55,16 @@ border-radius: 50%;
   height: 500px;
   width: 700px;
   left: 500px;
-  top: 100px;
+  top: 80px;
   box-shadow: rgba(0, 0, 0, 0.3) 6px 2px 20px 6px;
   border-radius: 5px;
   padding-left: 10px;
-
 }
 
 .container {
   background-color: darkgray;
   width: 100%;
-  height: 600px;
+  height: 400px;
   top: -20px;
 }
 
@@ -124,48 +124,52 @@ height: 50px;
 .court1 {
   position: relative;
   text-align: center;
-  right: 270px;
+  right: 240px;
 }
 
 .court2 {
   position: relative;
   text-align: center;
-  right: 110px;
+  right: 80px;
   top: -140px;
 }
 .court3 {
   position: relative;
   text-align: center;
-  right: -50px;
+  right: -80px;
   top: -280px;
 }
 .court4 {
   position: relative;
   text-align: center;
-  right: -210px;
+  right: -240px;
   top: -420px;
 }
 .court5 {
   position: relative;
   text-align: center;
-  right: 270px;
+  right: 240px;
   top: -420px;
 }
 .court6 {
   position: relative;
   text-align: center;
-  right: 110px;
+  right: 80px;
   top: -560px;
 }
 .court7 {
   position: relative;
   text-align: center;
-  right: -50px;
+  right: -80px;
   top: -700px;
 }
 .court8 {
   position: relative;
   text-align: center;
-  right: -210px;
+  right: -240px;
   top: -840px;
+}
+
+h6 {
+  font-size: 16px;
 }
