@@ -29,7 +29,8 @@ CREATE TABLE Courts
   1pm VARCHAR(50),
   2pm VARCHAR(50),
   3pm VARCHAR(50),
-  4pm VARCHAR(50)
+  4pm VARCHAR(50),
+  PRIMARY KEY (CourtName)
 );
 
 DROP TABLE if exists Reservations;
