@@ -1,6 +1,7 @@
 $(document).ready(function() {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
+  //user profile locators
   let username = $("#username");
   let memberid = $("#memberid");
   let membersince = $("#membersince");
@@ -9,6 +10,7 @@ $(document).ready(function() {
   let skillLevel = $("#skill-input");
   let favoriteActivity = $("#favorite-activity");
 
+  //athletic club details locator
 
   $.get("/api/user_data").then(data1 => {
     $.get(`/api/userProfile/${data1.id}`).then(data2 => {
@@ -20,5 +22,8 @@ $(document).ready(function() {
       skillLevel.text(skillLevel.text() + data2.skill_level);
       favoriteActivity.text(favoriteActivity.text() + data2.activity);
   });
+  $.get("/api/court").then(data =>{
+
+  })
 });
 });
