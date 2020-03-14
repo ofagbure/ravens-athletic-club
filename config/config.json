@@ -2,14 +2,14 @@
   "development": {
     "username": "root",
     "password": "mesmes",
-    "database": "passport_demo",
+    "database":"ravens_athletic",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "mesmes",
-    "database": "database_test",
+    "database": "testdb",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

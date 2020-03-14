@@ -4,7 +4,7 @@ CREATE DATABASE ravens_athletic;
 
 USE ravens_athletic;
 
-CREATE TABLE IF NOT EXISTS bookings (
+CREATE TABLE IF NOT EXISTS reservation (
     id INT(12) NOT NULL AUTO_INCREMENT,
     checkinTime DATETIME NOT NULL,
     checkoutTime DATETIME NOT NULL,
@@ -20,11 +20,19 @@ CREATE TABLE IF NOT EXISTS reservation_court (
     PRIMARY KEY(id)
 );
 
+-- 1 - Fundamental Awareness (basic knowledge)
+-- 2 - Novice (limited experience)
+-- 3 - Intermediate (practical application)
+-- 4 - Advanced (applied theory)
+-- 5 - Expert (recognized authority)
+
+
 CREATE TABLE IF NOT EXISTS players (
     id INT(12) NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     need_partner BOOLEAN DEFAULT false,
+    skill_level INT(1),
     activity VARCHAR(255) NOT NULL,
     PRIMARY KEY(id)
 );
