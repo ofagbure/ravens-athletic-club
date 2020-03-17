@@ -1,8 +1,8 @@
 $(document).ready(function() {
   // Getting references to our form and input
-  let signUpForm = $("form.signup");
-  let emailInput = $("input#email-input");
-  let passwordInput = $("input#password-input");
+  let signUpForm = $(".signup");
+  let emailInput = $("input #email-input");
+  let passwordInput = $("input #password-input");
 
   let firstNameInput = $("#firstname-input");
   let lastNameInput = $("#lastname-input");
@@ -14,13 +14,20 @@ $(document).ready(function() {
   signUpForm.on("submit", function(event) {
     event.preventDefault();
     let userData = {
-      email: emailInput.val().trim(),
-      password: passwordInput.val().trim(),
-      firstName: firstNameInput.val().trim(),
-      lastName: lastNameInput.val().trim(),
-      activity: activityInput.val().trim(),
-      skillLevel: skillInput.val().trim(),
-      partner: partnerInput.val().trim()
+      // email: emailInput.val().trim(),
+      // password: passwordInput.val().trim(),
+      // firstName: firstNameInput.val().trim(),
+      // lastName: lastNameInput.val().trim(),
+      // activity: activityInput.val().trim(),
+      // skillLevel: skillInput.val().trim(),
+      // partner: partnerInput.val().trim()
+      email: 'test@test.test',
+      password: 'test',
+      firstName: 'Mesay',
+      lastName: 'Bekele',
+      activity: 'Tennis',
+      skillLevel: '3',
+      partner: true
     };
 
     if (!userData.email || !userData.password) {
@@ -82,8 +89,5 @@ function createUserProfile(firstName, lastName, activity, skillLevel, partner){
       res.status(401).json(err);
     });
 }
-
-
-
 });
 

@@ -1,11 +1,8 @@
-// 'use strict';
-// // Sequelize (capital) references the standard library
-const Sequelize = require("sequelize");
-// // sequelize (lowercase) references our connection to the DB.
-// const sequelize = require("../config/connection.js");
 
-module.exports = function(sequelize, DataTypes) {
-const Player = sequelize.define('Player', {
+const Sequelize = require("sequelize");
+
+module.exports = function (sequelize, DataTypes) {
+  const Player = sequelize.define('Player', {
     first_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -19,12 +16,12 @@ const Player = sequelize.define('Player', {
       default: false,
     },
     skill_level: {
-       type: DataTypes.INTEGER,
-       allowNull: true,
-       validate : {
-         min:1,
-         max:5,
-       }
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      validate: {
+        min: 1,
+        max: 5,
+      }
     },
     activity: {
       type: DataTypes.STRING,
@@ -41,9 +38,25 @@ const Player = sequelize.define('Player', {
       defaultValue: new Date()
     }
   });
+  
+
   Player.associate = function(models) {
-    Player.belongsTo(models.Court, {foreignKey: 'courtId', as: 'court'})
+    Player.belongsTo(models.User, {foreignKey: 'UserId'})
+    Player.belongsToMany(models.Court, {through: 'Reservation', foreignKey: 'CourtId'})
   };
+
+  // Player.associate = models => {
+  //   Player.hasMany(models.Reservation, {
+  //     onDelete : "cascade"
+  //   });
+  
+
+  //   Player.belongsTo(models.User, {
+  //     foreignKey: {
+  //       allowNull: false,
+  //     }
+  //   })
+  // };
 
   return Player;
 };

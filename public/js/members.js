@@ -1,6 +1,7 @@
 $(document).ready(function() {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
+  //user profile locators
   let username = $("#username");
   let memberid = $("#memberid");
   let membersince = $("#membersince");
@@ -20,5 +21,13 @@ $(document).ready(function() {
       skillLevel.text(skillLevel.text() + data2.skill_level);
       favoriteActivity.text(favoriteActivity.text() + data2.activity);
   });
+
 });
+
+
+// $(".court").on("click", function () {
+//   console.log("you cliked", $(this).attr("name"));
+//   localStorage.setItem("court", $(this).attr("name"));
+//   window.location.replace("/reserve");
+// })
 });
