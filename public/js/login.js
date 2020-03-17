@@ -1,11 +1,12 @@
 $(document).ready(function() {
   // Getting references to our form and inputs
-  let loginForm = $("form.login");
+  let loginForm = $("#formLogin");
   let emailInput = $("input#email-input");
   let passwordInput = $("input#password-input");
 
   // When the form is submitted, we validate there's an email and password entered
   loginForm.on("submit", function(event) {
+    console.log("clicccccccccccccccccccccccccccccccccccccccccccked!");
     event.preventDefault();
     let userData = {
       email: emailInput.val().trim(),
@@ -28,7 +29,9 @@ $(document).ready(function() {
       email: email,
       password: password
     })
-      .then(function() {
+      .then(function(data) {
+        console.log("loooooooooooooooooged in!");
+        localStorage.setItem("userId", (data.id).toString());
         window.location.replace("/members");
         // If there's an error, log the error
       })

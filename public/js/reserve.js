@@ -1,167 +1,152 @@
-$(document).ready(function() {
-  /* global moment */
+$(document).ready(function () {
+    //code to generate time data - move to a separate module
+
+    //CREATE active hours array
+    var activeHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
+
+    const index = parseInt(localStorage.getItem("court"));
+
+    //create an object of hourlyData of 'startTime' and 'endTime' between 9am->5pm
+    var hourlyData = [{
+            startTime: moment().set({
+                'hour': 9,
+                'minute': 00
+            }),
+            endTime: moment().set({
+                'hour': 10,
+                'minute': 00
+            }),
+        },
+        {
+            startTime: moment().set({
+                'hour': 10,
+                'minute': 00
+            }),
+            endTime: moment().set({
+                'hour': 11,
+                'minute': 00
+            }),
+        },
+        {
+            startTime: moment().set({
+                'hour': 11,
+                'minute': 00
+            }),
+            endTime: moment().set({
+                'hour': 12,
+                'minute': 00
+            }),
+        },
+        {
+            startTime: moment().set({
+                'hour': 12,
+                'minute': 00
+            }),
+            endTime: moment().set({
+                'hour': 13,
+                'minute': 00
+            }),
+        },
+        {
+            startTime: moment().set({
+                'hour': 13,
+                'minute': 00
+            }),
+            endTime: moment().set({
+                'hour': 14,
+                'minute': 00
+            }),
+        },
+        {
+            startTime: moment().set({
+                'hour': 14,
+                'minute': 00
+            }),
+            endTime: moment().set({
+                'hour': 15,
+                'minute': 00
+            }),
+        },
+        {
+            startTime: moment().set({
+                'hour': 15,
+                'minute': 00
+            }),
+            endTime: moment().set({
+                'hour': 16,
+                'minute': 00
+            }),
+        },
+        {
+            startTime: moment().set({
+                'hour': 16,
+                'minute': 00
+            }),
+            endTime: moment().set({
+                'hour': 17,
+                'minute': 00
+            }),
+        },
+        {
+            startTime: moment().set({
+                'hour': 17,
+                'minute': 00
+            }),
+            endTime: moment().set({
+                'hour': 18,
+                'minute': 00
+            }),
+        },
+    ];
+
+
+    console.log("indeeexxxxx = " + JSON.stringify(hourlyData));
+    /////
+
+    console.log("Moment(hourlyData[index].startTime).format =" + moment(hourlyData[index].startTime).format("YYYY-MM-DD HH:mm:ss"));
+    const start_time = moment(hourlyData[index].startTime).format("YYYY-MM-DD HH:mm:ss");
+    const end_time = moment(hourlyData[index].endTime).format("YYYY-MM-DD HH:mm:ss");
+
+
+    $(".reserve").on("click", function () {
+        const index = parseInt(localStorage.getItem("court"));
+        console.log("reservation index = " + index);
+        const court = {
+            start_time: start_time,
+            end_time: end_time,
+            CourtId: parseInt(localStorage.getItem("court")),
+            PlayerId: parseInt(localStorage.getItem("userId"))
+        }
+        console.log("messss = ", court);
+        //API CALL to reserve A COURT
+        $.post("/api/reserve", court)
+            .then(res => {
+
+                res.render("/members");
+                // If there's an error, handle it by throwing up a bootstrap alert
+            })
+            .catch();
 
 
 
-  $(".court").on("click", function (event) {
-    console.log("heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"+event);
-    const id = $(this).data("dataid");
-
-    const courtSelected = {
-      id: id
-    };
-
-    // Send the PUT request.
-    $.ajax(`/api/court/${id}`, {  
-      type: "GET"
-    }).then(
-      (res) => {
-       
-        window.location.replace("/reserve");
-      }
-    );
-  });
 
 
+//DELETE THIS
+        // $.ajax({
+        //   url: "/api/court",
+        //   type: "POST",
+        //   data: court
+        // }).then(function (data) {
+        //   console.log("we got yhis back ", data);
 
+        //   $.ajax({
+        //     url: "/api/court/" + data.court_numb,
+        //     type: "GET"
+        //   }).then(function (data) {
+        //     console.log("second ajax ", data);
+        //   })
 
-
-
-  // blogContainer holds all of our posts
-  let blogContainer = $(".blog-container");
-  let postCategorySelect = $("#category");
-  // Click events for the edit and delete buttons
-  $(document).on("click", "button.delete", handlePostDelete);
-  $(document).on("click", "button.edit", handlePostEdit);
-  // Variable to hold our posts
-  let posts;
-
-  // The code below handles the case where we want to get blog posts for a specific author
-  // Looks for a query param in the url for author_id
-  let url = window.location.search;
-  let authorId;
-  if (url.indexOf("?author_id=") !== -1) {
-    authorId = url.split("=")[1];
-    getPosts(authorId);
-  }
-  // If there's no authorId we just get all posts as usual
-  else {
-    getPosts();
-  }
-
-
-  // This function grabs posts from the database and updates the view
-  function getPosts(author) {
-    authorId = author || "";
-    if (authorId) {
-      authorId = "/?author_id=" + authorId;
-    }
-    $.get("/api/posts" + authorId, data => {
-      console.log("Posts", data);
-      posts = data;
-      if (!posts || !posts.length) {
-        displayEmpty(author);
-      }
-      else {
-        initializeRows();
-      }
-    });
-  }
-
-  // This function does an API call to delete posts
-  function deletePost(id) {
-    $.ajax({
-      method: "DELETE",
-      url: "/api/posts/" + id
+        // })
     })
-      .then(function() {
-        getPosts(postCategorySelect.val());
-      });
-  }
-
-  // InitializeRows handles appending all of our constructed post HTML inside blogContainer
-  function initializeRows() {
-    blogContainer.empty();
-    let postsToAdd = [];
-    for (let i = 0; i < posts.length; i++) {
-      postsToAdd.push(createNewRow(posts[i]));
-    }
-    blogContainer.append(postsToAdd);
-  }
-
-  // This function constructs a post's HTML
-  function createNewRow(post) {
-    let formattedDate = new Date(post.createdAt);
-    formattedDate = moment(formattedDate).format("MMMM Do YYYY, h:mm:ss a");
-    let newPostCard = $("<div>");
-    newPostCard.addClass("card");
-    let newPostCardHeading = $("<div>");
-    newPostCardHeading.addClass("card-header");
-    let deleteBtn = $("<button>");
-    deleteBtn.text("x");
-    deleteBtn.addClass("delete btn btn-danger");
-    let editBtn = $("<button>");
-    editBtn.text("EDIT");
-    editBtn.addClass("edit btn btn-info");
-    let newPostTitle = $("<h2>");
-    let newPostDate = $("<small>");
-    let newPostAuthor = $("<h5>");
-    newPostAuthor.text("Written by: Author name display is in next activity when we learn joins!");
-    newPostAuthor.css({
-      float: "right",
-      color: "blue",
-      "margin-top":
-      "-10px"
-    });
-    let newPostCardBody = $("<div>");
-    newPostCardBody.addClass("card-body");
-    let newPostBody = $("<p>");
-    newPostTitle.text(post.title + " ");
-    newPostBody.text(post.body);
-    newPostDate.text(formattedDate);
-    newPostTitle.append(newPostDate);
-    newPostCardHeading.append(deleteBtn);
-    newPostCardHeading.append(editBtn);
-    newPostCardHeading.append(newPostTitle);
-    newPostCardHeading.append(newPostAuthor);
-    newPostCardBody.append(newPostBody);
-    newPostCard.append(newPostCardHeading);
-    newPostCard.append(newPostCardBody);
-    newPostCard.data("post", post);
-    return newPostCard;
-  }
-
-  // This function figures out which post we want to delete and then calls deletePost
-  function handlePostDelete() {
-    let currentPost = $(this)
-      .parent()
-      .parent()
-      .data("post");
-    deletePost(currentPost.id);
-  }
-
-  // This function figures out which post we want to edit and takes it to the appropriate url
-  function handlePostEdit() {
-    let currentPost = $(this)
-      .parent()
-      .parent()
-      .data("post");
-    window.location.href = "/cms?post_id=" + currentPost.id;
-  }
-
-  // This function displays a message when there are no posts
-  function displayEmpty(id) {
-    let query = window.location.search;
-    let partial = "";
-    if (id) {
-      partial = " for Author #" + id;
-    }
-    blogContainer.empty();
-    let messageH2 = $("<h2>");
-    messageH2.css({ "text-align": "center", "margin-top": "50px" });
-    messageH2.html("No posts yet" + partial + ", navigate <a href='/cms" + query +
-    "'>here</a> in order to get started.");
-    blogContainer.append(messageH2);
-  }
 
 });
