@@ -25,6 +25,15 @@ $(document).ready(function() {
 });
 
 
+// const data = {
+//   user_name: data1.email,
+//   name : `${data2.first_name} ${data2.last_name}`,
+//   member_id : data2.player_id,
+//   member_since : member_since,
+//   skill_level : skill_level,
+//   partner: partner,
+// }
+
 // $(".court").on("click", function () {
 //   console.log("you cliked", $(this).attr("name"));
 //   localStorage.setItem("court", $(this).attr("name"));

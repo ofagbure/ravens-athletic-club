@@ -39,7 +39,7 @@ let userId;
             UserId: data.id
           })
           .then(function () {
-
+      
             res.redirect(307, "/api/login");
           })
           .catch(err => {

@@ -36,7 +36,7 @@ router.get("/api/userProfile", (req, res) => {
 //get specific userprofile
 
 router.get("/api/userProfile/:id", (req, res) => {
-  console.log(" req.params.id = " + req.params.id)
+
   db.Player.findOne({
       where: {
         id: req.params.id
