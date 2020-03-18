@@ -115,7 +115,7 @@ function reservation (req, res) {
   if (req.user) {
     res.render('reserve');
   }
-  res.render('login');
+  // res.render('login');
 };
 
 module.exports = router;
