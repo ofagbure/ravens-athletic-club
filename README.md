@@ -1,4 +1,4 @@
-# Ravens' Athletic Club
+# Ravens Athletic Club
 
 You can visit the deployed site here 
 
@@ -19,11 +19,11 @@ AS an athletic club manager
 I want to be able to manage the courts 
 So that I know who is using the tennis courts at any given time
 
-AS a member of Raven's Athletic Club
+AS a member of Ravens Athletic Club
 I want to be able to view available tennis courts
 SO that I can make a reservation at any time without coming in
 
-AS a member of Raven's Athletic Club
+AS a member of Ravens Athletic Club
 I want to be able to view hours of operation for the different facilities
 So that I know what times I can be at the club to take advantage of them
 
@@ -38,7 +38,7 @@ If there is no court available, I am added to the waitlist and moved up if a res
 This application is built with standard HTML5, and CSS.
 It also makes use of the below technologies;
 
-* Sequalize
+* Sequelize
 * Handlebars
 * Passport
 * MySQL
