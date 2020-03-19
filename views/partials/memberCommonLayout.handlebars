@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top ">
       <div class="container">
-        <a class="navbar-brand" href="/members">Ravens Athletic </a>
+        <a class="navbar-brand" href="/members"><p><img src="images/raven-logo.png"> Ravens Athletic</p> </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -21,9 +21,7 @@
               <a class="nav-link nav_option  text-white" href="/basketball">View Basketball
                 Hours</a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link text-white" href="/members">Edit Profile</a>
-            </li>
+
             <a class="btn btn-primary logout" href="/logout" role="button" style="font-size: 15px;">Log
               Out</a>
           </ul>
@@ -52,6 +50,7 @@
             <p class="userInfo" id="name"> Name : {{ name }}</p>
             <p class="userInfo"  id="memberid"> Member id : {{ member_id }}</p>
             <p class="userInfo"  id="membersince"> Member since : {{ member_since }}</p>
+             <p class="userInfo"  id="favorite-activity"> Favorite Activity : {{ favorite_activity }}</p>
             <p class="userInfo"  id="skill-input"> Skill Level : {{ skill_level }}</p>
 
             {{#if partner}}

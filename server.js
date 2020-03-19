@@ -47,13 +47,13 @@ app.set("view engine", "handlebars");
 const courtController = require("./controllers/court-controller.js");
 const reserveController = require("./controllers/reserve-controller.js");
 const userController = require("./controllers/user-controller.js");
-// const userprofileController = require("./controllers/userprofile-controller.js");
+const userprofileController = require("./controllers/userprofile-controller.js");
 const viewController = require("./controllers/view-controller.js");
 
 app.use(courtController);
 app.use(reserveController);
 app.use(userController);
-// app.use(userprofileController);
+app.use(userprofileController);
 app.use(viewController);
 
 // Syncing our database and logging a message to the user upon success

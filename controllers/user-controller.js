@@ -28,7 +28,7 @@ let userId;
       })
       .then(function (data) {
         userId = data.id;
-
+        // localStorage.setItem('userId', data.id);
         db.Player.create({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -39,7 +39,7 @@ let userId;
             UserId: data.id
           })
           .then(function () {
-      
+            
             res.redirect(307, "/api/login");
           })
           .catch(err => {

@@ -19,40 +19,11 @@ let isAuthenticated = require("../config/middleware/isAuthenticated");
 // Each of the below routes just handles the HTML page that the user gets sent to.
 router.get('/', userAccess);
 router.get('/login', loginUser);
-router.get('/members', members);
+router.get('/members', renderMemberPage);
 router.get('/tennis', tennisCourtList);
 router.get('/pool', poolList);
 router.get('/basketball', basketBallList);
 router.get('/reserve', reservation);
-
-
-// router.get('/blog', renderBlog);
-// router.get('/', renderBlog);
-
-// cms route loads cms.html
-router.get("/cms", function (req, res) {
-  res.render('cms');
-});
-
-router.get("/authors", function (req, res) {
-  res.render('authors');
-});
-
-
-// // helper for / and blog routes
-// function renderBlog(req, res) {
-//   var query = {};
-//   if (req.query.author_id) {
-//     query.AuthorId = req.query.author_id;
-//   }
-//   db.Post.findAll({
-//     where: query,
-//     include: [db.Author]
-//   }).then(function (posts) {
-//     res.render('blog', { posts: posts })
-//   });
-// }
-
 
 
 //user access
@@ -60,7 +31,8 @@ router.get("/authors", function (req, res) {
 function userAccess(req, res) {
   // If the user already has an account send them to the members page
   if (req.user) {
-    res.render("members");
+    res.redirect("/members", renderMemberPage);
+    // res.render("members");
   }
   res.render('signup');
 };
@@ -70,51 +42,194 @@ function userAccess(req, res) {
 function loginUser(req, res) {
   // If the user already has an account send them to the members page
   if (req.user) {
-    res.render("members");
+    console.log("user data profile = ", req)
+    res.render("members", renderMemberPage);
   }
   res.render('login');
 };
 
 
 // helper for / and blog routes
-function members (req, res) {
+async function renderMemberPage(req, res) {
+  // helper for / and blog routes
+
   if (req.user) {
-    res.render("members");
-  } 
+     db.Player.findOne({
+      
+          UserId: req.user.id
+
+      }).then(function (userData) {
+        const userProf ={
+          ...req.user,
+          ...userData.dataValues
+        }
+        const playerDataRender = {
+          user_name: userProf.email,
+          member_id: userProf.UserId,
+          member_since: userProf.createdAt,
+           name : `${userProf.first_name} ${userProf.last_name}`,
+          need_partner: userProf.need_partner,
+          skill_level: userProf.skill_level,
+          favorite_activity: userProf.activity,
+        }
+        res.render("members", playerDataRender);
+      })
+      .catch(err => {
+        res.status(401).json(err);
+      });
+  }
+
+
 
 };
 
-//render tennis page
-function tennisCourtList (req, res) {
-  if (req.user) {
-    res.render("tennis");
+
+//get user profile data 
+function userProfileData (req){
+  db.Player.findOne({
+      
+    UserId: req.user.id
+
+}).then(function (userData) {
+  const userProf ={
+    ...req.user,
+    ...userData.dataValues
   }
-  // res.render('login');
+  const playerDataRender = {
+    user_name: userProf.email,
+    member_id: userProf.UserId,
+    member_since: userProf.createdAt,
+     name : `${userProf.first_name} ${userProf.last_name}`,
+    need_partner: userProf.need_partner,
+    skill_level: userProf.skill_level,
+    favorite_activity: userProf.activity,
+  }
+ return playerDataRender;
+})
+.catch(err => {
+  res.status(401).json(err);
+});
 }
 
 //render tennis page
-function poolList (req, res) {
-  if (req.user) {
-    res.render("pool");
+function tennisCourtList(req, res) {
+
+    if (req.user) {
+      db.Player.findOne({
+       
+           UserId: req.user.id
+ 
+       }).then(function (userData) {
+         const userProf ={
+           ...req.user,
+           ...userData.dataValues
+         }
+         const playerDataRender = {
+           user_name: userProf.email,
+           member_id: userProf.UserId,
+           member_since: userProf.createdAt,
+            name : `${userProf.first_name} ${userProf.last_name}`,
+           need_partner: userProf.need_partner,
+           skill_level: userProf.skill_level,
+           favorite_activity: userProf.activity,
+         }
+         res.render("tennis", playerDataRender);
+       })
+       .catch(err => {
+         res.status(401).json(err);
+       });
+   }
   }
-  // res.render('login');
+
+
+//render tennis page
+function poolList(req, res) {
+  if (req.user) {
+    db.Player.findOne({
+     
+         UserId: req.user.id
+
+     }).then(function (userData) {
+       const userProf ={
+         ...req.user,
+         ...userData.dataValues
+       }
+       const playerDataRender = {
+         user_name: userProf.email,
+         member_id: userProf.UserId,
+         member_since: userProf.createdAt,
+          name : `${userProf.first_name} ${userProf.last_name}`,
+         need_partner: userProf.need_partner,
+         skill_level: userProf.skill_level,
+         favorite_activity: userProf.activity,
+       }
+       res.render("pool", playerDataRender);
+     })
+     .catch(err => {
+       res.status(401).json(err);
+     });
+ }
 }
 
 //render tennis page
-function basketBallList (req, res) {
+function basketBallList(req, res) {
   if (req.user) {
-    res.render("basketball");
-  }
+    db.Player.findOne({
+     
+         UserId: req.user.id
+
+     }).then(function (userData) {
+       const userProf ={
+         ...req.user,
+         ...userData.dataValues
+       }
+       const playerDataRender = {
+         user_name: userProf.email,
+         member_id: userProf.UserId,
+         member_since: userProf.createdAt,
+          name : `${userProf.first_name} ${userProf.last_name}`,
+         need_partner: userProf.need_partner,
+         skill_level: userProf.skill_level,
+         favorite_activity: userProf.activity,
+       }
+       res.render("basketbaLL", playerDataRender);
+     })
+     .catch(err => {
+       res.status(401).json(err);
+     });
+ }
   // res.render('login');
 }
 // reservation page
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
-function reservation (req, res) {
+// Here we've add our isAuthenticated middleware to this route.
+// If a user who is not logged in tries to access this route they will be redirected to the signup page
+function reservation(req, res) {
 
   if (req.user) {
-    res.render('reserve');
-  }
+    db.Player.findOne({
+     
+         UserId: req.user.id
+
+     }).then(function (userData) {
+       const userProf ={
+         ...req.user,
+         ...userData.dataValues
+       }
+       const playerDataRender = {
+         user_name: userProf.email,
+         member_id: userProf.UserId,
+         member_since: userProf.createdAt,
+          name : `${userProf.first_name} ${userProf.last_name}`,
+         need_partner: userProf.need_partner,
+         skill_level: userProf.skill_level,
+         favorite_activity: userProf.activity,
+       }
+       res.render("reserve", playerDataRender);
+     })
+     .catch(err => {
+       res.status(401).json(err);
+     });
+ }
   // res.render('login');
 };
 
