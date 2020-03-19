@@ -1,8 +1,8 @@
 $(document).ready(function() {
   // Getting references to our form and input
-  let signUpForm = $("form.signup");
-  let emailInput = $("input#email-input");
-  let passwordInput = $("input#password-input");
+  let signUpForm = $(".signup");
+  let emailInput = $("#email-input");
+  let passwordInput = $("#password-input");
 
   let firstNameInput = $("#firstname-input");
   let lastNameInput = $("#lastname-input");
@@ -13,6 +13,12 @@ $(document).ready(function() {
   // When the signup button is clicked, we validate the email and password are not blank
   signUpForm.on("submit", function(event) {
     event.preventDefault();
+    console.log("userData = ", event)
+    let partnerRequested = false;
+    if( partnerInput.val().trim() === 2){
+      partnerRequested = true;
+    } 
+
     let userData = {
       email: emailInput.val().trim(),
       password: passwordInput.val().trim(),
@@ -20,9 +26,16 @@ $(document).ready(function() {
       lastName: lastNameInput.val().trim(),
       activity: activityInput.val().trim(),
       skillLevel: skillInput.val().trim(),
-      partner: partnerInput.val().trim()
+      partner: partnerRequested
+      // email: 'test@test.test',
+      // password: 'test',
+      // firstName: 'Mesay',
+      // lastName: 'Bekele',
+      // activity: 'Tennis',
+      // skillLevel: '3',
+      // partner: true
     };
-
+console.log("userData = ", userData)
     if (!userData.email || !userData.password) {
       return;
     }
@@ -49,8 +62,8 @@ $(document).ready(function() {
       skill_level:skillLevel,
       activity: activity,
     })
-      .then(data => {
-
+      .then(function (data) {
+console.log("dta 101 = ", data);
         window.location.replace("/members");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
@@ -82,8 +95,5 @@ function createUserProfile(firstName, lastName, activity, skillLevel, partner){
       res.status(401).json(err);
     });
 }
-
-
-
 });
 
