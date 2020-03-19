@@ -114,20 +114,18 @@ $(document).ready(function () {
         const court = {
             start_time: start_time,
             end_time: end_time,
-            CourtId: parseInt(localStorage.getItem("court")),
-            PlayerId: parseInt(localStorage.getItem("userId"))
+            court_numb: parseInt(localStorage.getItem("court")),
+            player_id: parseInt(localStorage.getItem("userId"))
         }
-        console.log("messss = ", court);
+ 
         //API CALL to reserve A COURT
         $.post("/api/reserve", court)
             .then(res => {
 
-                res.render("/members");
+                res.render("/reserve");
                 // If there's an error, handle it by throwing up a bootstrap alert
             })
             .catch();
-
-
 
 
 

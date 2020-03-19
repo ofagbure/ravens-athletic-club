@@ -17,7 +17,9 @@ router.post("/api/reserve", (req, res) => {
       PlayerId: parseInt(req.body.player_id)
     })
     .then(function () {
-      // res.redirect(307, "/api/members");
+ 
+      res.status(201);
+  //    res.redirect(307, "/api/reserve");
     })
     .catch(err => {
       res.status(401).json(err);
