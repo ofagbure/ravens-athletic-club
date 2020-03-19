@@ -36,7 +36,12 @@ If there is no court available, I am added to the waitlist and moved up if a res
 
 ## Technologies Used
 This application is built with standard HTML5, and CSS.
-It also makes use of the below technologies
+It also makes use of the below technologies;
+
+* Sequalize
+* Handlebars
+* Passport
+* MySQL
 
 
 ## License
