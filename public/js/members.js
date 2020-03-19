@@ -11,19 +11,28 @@ $(document).ready(function() {
   let favoriteActivity = $("#favorite-activity");
 
 
-  $.get("/api/user_data").then(data1 => {
-    $.get(`/api/userProfile/${data1.id}`).then(data2 => {
-      username.text(username.text() + data1.email);
-      memberid.text(memberid.text() + data1.id);
-      membersince.text(membersince.text() + data2.createdAt);
-      name.text(name.text() + `${data2.first_name} ${data2.last_name}`);
-      partner.text(partner.text() + data2.need_partner);
-      skillLevel.text(skillLevel.text() + data2.skill_level);
-      favoriteActivity.text(favoriteActivity.text() + data2.activity);
-  });
+//   $.get("/api/user_data").then(data1 => {
+//     $.get(`/api/userProfile/${data1.id}`).then(data2 => {
+//       username.text(username.text() + data1.email);
+//       memberid.text(memberid.text() + data1.id);
+//       membersince.text(membersince.text() + data2.createdAt);
+//       name.text(name.text() + `${data2.first_name} ${data2.last_name}`);
+//       partner.text(partner.text() + data2.need_partner);
+//       skillLevel.text(skillLevel.text() + data2.skill_level);
+//       favoriteActivity.text(favoriteActivity.text() + data2.activity);
+//   });
 
-});
+// });
 
+
+// const data = {
+//   user_name: data1.email,
+//   name : `${data2.first_name} ${data2.last_name}`,
+//   member_id : data2.player_id,
+//   member_since : member_since,
+//   skill_level : skill_level,
+//   partner: partner,
+// }
 
 // $(".court").on("click", function () {
 //   console.log("you cliked", $(this).attr("name"));

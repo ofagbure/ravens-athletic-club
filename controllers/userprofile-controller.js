@@ -27,7 +27,8 @@ router.post("/api/userProfile", (req, res) => {
 //get all userprofile
 router.get("/api/userProfile", (req, res) => {
   db.Player.findAll().then((userProf) => {
-    res.send(userProf)
+    console.log("user profile data ");
+    res.json(userProf)
   }).catch(err => {
     res.status(401).json(err);
   });
@@ -36,7 +37,7 @@ router.get("/api/userProfile", (req, res) => {
 //get specific userprofile
 
 router.get("/api/userProfile/:id", (req, res) => {
-  console.log(" req.params.id = " + req.params.id)
+
   db.Player.findOne({
       where: {
         id: req.params.id

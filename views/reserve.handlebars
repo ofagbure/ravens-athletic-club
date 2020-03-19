@@ -1,78 +1,7 @@
-<section id="header">
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top ">
-            <div class="container">
-                <a class="navbar-brand" href="#">Ravens Athletic </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
+  {{> memberCommonLayout}}
 
-                        <li class="nav-item ">
-                            <a class="nav-link nav_option text-white" href="/tennis">Reserve Tennis Court</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link nav_option text-white" href="/pool">View Pool Hours</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link nav_option  text-white" href="/basketball">View Basketball
-                                Hours</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link text-white" href="/members">Edit Profile</a>
-                        </li>
-                        <a class="btn btn-primary logout" href="/logout" role="button" style="font-size: 15px;">Log
-                            Out</a>
-                    </ul>
-
-                </div>
-            </div>
-        </nav>
-
-    </div>
-</section>
-
-
-<section class="main">
-    <div class="container-fluid ">
-        <div class="row">
-            <div class="col-sm-4 mt-4 m-5 p-5">
-                <div class="card profile-card-5">
-                    <div class="card-img-block">
-                        <img class="card-img-top" src="https://images.unsplash.com/photo-1517832207067-4db24a2ae47c"
-                            alt="Card image cap">
-                    </div>
-                    <div class="card-body pt-0">
-                        <h5 class="card-title">User Profile</h5>
-
-                        <p class="userInfo" id="username"> Username :</p>
-                        <p class="userInfo" id="name"> Name :</p>
-                        <p class="userInfo" id="memberid"> Member id :</p>
-                        <p class="userInfo" id="membersince"> Member since :</p>
-                        <p class="userInfo" id="favorite-activity"> Favorite activity : :</p>
-                        <p class="userInfo" id="skill-input"> Skill Level :</p>
-                        <p class="userInfo" id="partner"> Looking for tennis partner :</p>
-                        <!-- <p><i class="fa fa-map-marker" aria-hidden="true"></i> New Jersey, USA.</p> -->
-
-                        <a href="#" class="btn btn-primary">Edit</a>
-                    </div>
-                </div>
-
-            </div>
-            <div class="detail-info col-sm-7 bg-light m-5 p-5 border-rounded">
-                <div class="card">
-                    <div class="card-header bg-primary ">
-                        <div class="row">
-                            <div class="col-sm-12 text-center pb-2">
-                                <h2 class="pageHeader">Ravens Athletic Club</h2>
-                                <h4 id="home_name">Welcome, Mesay Bekele </h4>
-                            </div>
-                        </div>
-                    </div>
+                
                     <div class="card-body">
                         <div class="row">
                             <table class="table table-hover table-light">
@@ -153,4 +82,3 @@
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/members.js"></script>

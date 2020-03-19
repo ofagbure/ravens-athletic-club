@@ -13,6 +13,7 @@ $(document).ready(function() {
   // When the signup button is clicked, we validate the email and password are not blank
   signUpForm.on("submit", function(event) {
     event.preventDefault();
+    console.log("userData = ", event)
     let partnerRequested = false;
     if( partnerInput.val().trim() === 2){
       partnerRequested = true;
@@ -34,7 +35,7 @@ $(document).ready(function() {
       // skillLevel: '3',
       // partner: true
     };
-
+console.log("userData = ", userData)
     if (!userData.email || !userData.password) {
       return;
     }
@@ -61,8 +62,8 @@ $(document).ready(function() {
       skill_level:skillLevel,
       activity: activity,
     })
-      .then(data => {
-
+      .then(function (data) {
+console.log("dta 101 = ", data);
         window.location.replace("/members");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
