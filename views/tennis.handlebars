@@ -1,40 +1,71 @@
+{{> memberCommonLayout}}
 
-  {{> memberCommonLayout}}
-
-          <div class="card-body">
-            <div class="row">
-              <div class="court court1 col-xm-5 col-sm-3" name="1">Court 1<br><img id="courts" src="images/tennis-court.png"></div>
-              <div class="court court2 col-xm-5  col-sm-3" name="2">Court 2<br><img id="courts" src="images/tennis-court.png"></div>
-              <div class="court court3 col-xm-5  col-sm-3" name="3">Court 3<br><img id="courts" src="images/tennis-court.png"></div>
-              <div class="court court4 col-xm-5  col-sm-3" name="4">Court 4<br><img id="courts" src="images/tennis-court.png"></div>
-            </div>
-            <div class="row">
-              <div class="court court5 col-xm-5  col-sm-3" name="5">Court 5<br><img id="courts" src="images/tennis-court.png"></div>
-              <div class="court court6 col-xm-5  col-sm-3" name="6">Court 6<br><img id="courts" src="images/tennis-court.png"></div>
-              <div class="court court7 col-xm-5  col-sm-3" name="7">Court 7<br><img id="courts" src="images/tennis-court.png"></div>
-              <div class="court court8 col-xm-5  col-sm-3" name="8">Court 8<br><img id="courts" src="images/tennis-court.png"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- remove -->
-      <div class="row user-social-detail">
-
-        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-        <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-
-      </div>
-      <!-- remove -->
-
-
-
-
+<div class="card-body">
+  <div class="row">
+    <div class="court court1 col-xm-5 col-sm-3" name="1">Court 1<br><img id="courts" src="images/tennis-court.png">
+    </div>
+    <div class="court court2 col-xm-5  col-sm-3" name="2">Court 2<br><img id="courts" src="images/tennis-court.png">
+    </div>
+    <div class="court court3 col-xm-5  col-sm-3" name="3">Court 3<br><img id="courts" src="images/tennis-court.png">
+    </div>
+    <div class="court court4 col-xm-5  col-sm-3" name="4">Court 4<br><img id="courts" src="images/tennis-court.png">
     </div>
   </div>
+  <div class="row">
+    <div class="court court5 col-xm-5  col-sm-3" name="5">Court 5<br><img id="courts" src="images/tennis-court.png">
+    </div>
+    <div class="court court6 col-xm-5  col-sm-3" name="6">Court 6<br><img id="courts" src="images/tennis-court.png">
+    </div>
+    <div class="court court7 col-xm-5  col-sm-3" name="7">Court 7<br><img id="courts" src="images/tennis-court.png">
+    </div>
+    <div class="court court8 col-xm-5  col-sm-3" name="8">Court 8<br><img id="courts" src="images/tennis-court.png">
+    </div>
   </div>
+  <div class="row mt-5">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header text-center">
+          <h4>Players looking for match partner</h4>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Reservation ID</th>
+                <th>Court</th>
+                <th>Player Name</th>
+                <th>Skill Level</th>
+                <th>Start Time</th>
+                <th>Join</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each partnerRequestList}}
+              <tr>
+                <td class="rowdata">{{this.reservationId}}</td>
+                <td>{{this.court}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.skillLevel}}</td>
+                <td>{{this.startTime}}</td>
+                <td>
+                  <div class="btn btn-dark join_player" data-reserveId={{this.reservationId}}>Join</div>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/signup.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

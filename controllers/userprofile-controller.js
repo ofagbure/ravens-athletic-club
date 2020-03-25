@@ -1,10 +1,10 @@
 
-
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 let passport = require("../config/passport");
 const express = require('express');
 const router = express.Router();
+
 //create a user profile
 router.post("/api/userProfile", (req, res) => {
   db.Player.create({
@@ -16,7 +16,6 @@ router.post("/api/userProfile", (req, res) => {
       courtId: req.body.courtId
     })
     .then(function () {
-
       res.redirect(307, "/api/login");
     })
     .catch(err => {
@@ -35,7 +34,6 @@ router.get("/api/userProfile", (req, res) => {
 })
 
 //get specific userprofile
-
 router.get("/api/userProfile/:id", (req, res) => {
 
   db.Player.findOne({
@@ -53,14 +51,13 @@ router.get("/api/userProfile/:id", (req, res) => {
 
 
 //update userprofile
-router.put("/api/userProfile/:id", (req, res) => {
+router.post("/api/userProfile/:id", (req, res) => {
 
   db.Player.update({
       first_name: req.body.first_name,
       last_name: req.body.last_name,
-      need_partner: req.body.need_partner,
+      need_partner: parseInt(req.body.need_partner),
       activity: req.body.activity,
-      courtId: req.body.courtId
     }, {
       where: {
         id: req.params.id

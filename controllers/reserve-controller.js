@@ -1,5 +1,3 @@
-
-
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 let passport = require("../config/passport");
@@ -7,23 +5,49 @@ const express = require('express');
 const router = express.Router();
 
 
-//create a user profile
+//create a reservation
 router.post("/api/reserve", (req, res) => {
   console.log(" reserve CALL BODY  = ", req.body)
   db.Reservation.create({
       start_time: req.body.start_time,
       end_time: req.body.end_time,
-      CourtId: parseInt(req.body.court_numb),
-      PlayerId: parseInt(req.body.player_id)
+      partner: req.body.partner,
+      CourtId: parseInt(req.body.CourtId),
+      PlayerId: parseInt(req.body.PlayerId)
     })
     .then(function () {
- 
+
       res.status(201);
-  //    res.redirect(307, "/api/reserve");
     })
     .catch(err => {
       res.status(401).json(err);
     });
 });
 
-  module.exports = router;
+//update a reservation
+router.post("/api/reserve/update", (req, res) => {
+  db.Reservation.update({
+    PartnerId: parseInt(req.body.PartnerId),
+      partner : req.body.partner,
+      PartnerName: req.body.PartnerName
+    }, {
+      where: {
+        id: parseInt(req.body.reservationId)
+      }
+    }).then(function () {
+
+      res.status(201);
+    })
+    .catch(err => {
+      res.status(401).json(err);
+    });
+
+
+
+
+
+
+
+})
+
+module.exports = router;

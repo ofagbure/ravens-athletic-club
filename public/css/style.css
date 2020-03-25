@@ -2,7 +2,26 @@
   margin:0;
   padding: 0;
 }
+html {
+  height: 100%;
+}
 
+label {
+  margin-bottom: -60px;
+}
+
+
+
+.memberProfile {
+  margin-left:20px
+}
+.card-img-top {
+  width: 250px;
+  height: 200px;
+}
+.row {
+  display: flex; 
+}
 .logoimage {
   height: 100px;
   width: 100px;
@@ -25,7 +44,7 @@ ul {
 }
 
 .navbar {
-  padding:50px 0;
+  padding:10px 0;
 }
 
 .navbar-brand {
@@ -44,8 +63,9 @@ ul {
 }
 
 .navbar-dark .navbar-nav .nav-item .nav-link:hover {
-  background: #dcdde1;
+  background: #2d2d39;
   color: rgb(53, 31, 31);
+  border-radius: 30%;
 }
 
 .main {
@@ -54,7 +74,7 @@ ul {
   min-height: 100vh;
   background-size: cover;
   background-position: center;
-  padding:150px 0 20px;
+  padding:75px 0 20px;
 
 }
 
@@ -88,16 +108,22 @@ ul {
   box-shadow:0 0 10px rgba(0,0,0,0.63);
 }
 .profile-card-5 h5{
-  color:#4E5E30;
+  color:rgb(8, 8, 7);
   font-size: larger;
   font-weight:600;
   text-align: center;
 }
 .profile-card-5 p{
   font-size:14px;
-  font-weight:bold;
+  padding-left: 10px;
+/* //  font-weight:bold; */
 }
-.profile-card-5 .btn-primary{
-  background-color:#4E5E30;
-  border-color:#4E5E30;
+/* .profile-card-5 .btn-primary{
+  background-color:#343a40;
+
+} */
+
+.detailHeader {
+  background-color: #2d2d39;
+ 
 }

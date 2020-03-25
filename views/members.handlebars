@@ -1,93 +1,100 @@
+{{> memberCommonLayout}}
 
-  {{> memberCommonLayout}}
-
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="card">
-                  <div class="card-header">
-                    <h3 id="home_name">Your coming reservations </h3>
-                  </div>
-                  <div class="card-body pl-5">
-                    <ol>
-                      <li><h5> {{ court-numb }} scheduled at {{ schedule }}</h5></li>
-                      <li><h5> {{ court-numb }} scheduled at {{ schedule }}</h5></li>
-                      <li><h5> {{ court-numb }} scheduled at {{ schedule }}</h5></li>
-                      <li><h5> {{ court-numb }} scheduled at {{ schedule }}</h5></li>
-                    </ol>
-                  </div>
-                </div>
-
-              </div>
-              <div class="col-sm-4">
-                <div class="card">
-                  <div class="card-body pl-5">
-                    <img class="logoImage"
-                      src="images/clubImage.png">
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="card" style="width: 18rem;">
-                  <div class="card-body">
-                    <h5 class="card-title" id="home_name">We have partnered you with </h5>
-                    <ol>
-                      <li>Player 1(name) Court 3 scheduled at Tuesday 10am</li>
-                      <li>Player 3(name) Court 2 scheduled at Tuesday 2am</li>
-                      <li>Player 2(name) Court 1 scheduled at Tuesday 9am</li>
-                    </ol>
-
-                    <a href="#" id="home_name" class="btn btn-primary">Reschedule</a>
-                  </div>
-                </div>
-                <h3 id="home_name">We have partnered you with </h3>
-
-              </div>
-              <div class="col-sm-5">
-                <div class="card">
-                  <div class="card-body">
-                    <h3 id="home_name">Trainers near you </h3>
-                    <ul>
-                      <li><a>James Craine</a></li>
-                      <li><a>Femi Fagbure</a></li>
-                      <li><a>Mesay Bekele</a></li>
-                      <a href="#" class="btn btn-primary">Contact</a>
-
-                    </ul>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
+<div class="card-body">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3 id="home_name">Your coming reservations </h3>
+          <h4 id ="current_time"></h4>
         </div>
+        <div class="card-body">
 
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Court</th>
+                <th>Start</th>
+                <th>End</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each reserationsList}}
+              <tr>
+                <td>{{this.court}}</td>
+                <td>{{this.start}}</td>
+                <td>{{this.end}}</td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
 
-
+        </div>
       </div>
 
-
-
-      <!-- remove -->
-      <div class="row user-social-detail">
-
-        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-        <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-
-      </div>
-      <!-- remove -->
-
-
-
+    </div>
+    <div class="col-sm-4 text-center">
+         <img class="logoImage" src="images/clubImage.png">
+      {{!-- <div class="card">
+        <div class="card-body pl-5">
+          <img class="logoImage" src="images/clubImage.png">
+        </div>
+      </div> --}}
 
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+      <h3 class="pl-5" id="home_name">Next Game with </h3>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Player Name</th>
+                <th>Partner Name</th>
+                <th>Court</th>
+                <th>Start</th>
+                <th>Skill Level</th>
+                <th>End</th>
+                <th>Cancel</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each partnerReservationList}}
+              <tr>
+                <td>{{this.name}}</td>
+                <td>{{this.PartnerName}}</td>
+                <td>{{this.court}}</td>
+                <td>{{this.startTime}}</td>
+                <td>{{this.skillLevel}}</td>
+                <td>{{this.end}}</td>
+                <td><div class="btn btn-danger cancelJoin" data-reservationId = {{this.reservationId}}>Cancel</div></td>
+              </tr>
+              {{/each}}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+</div>
+</div>
 
 </section>
 
