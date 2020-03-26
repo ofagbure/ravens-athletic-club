@@ -13,7 +13,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     need_partner: {
       type: DataTypes.BOOLEAN,
-      default: false,
+      allowNull: true,
     },
     skill_level: {
       type: DataTypes.INTEGER,
@@ -41,22 +41,9 @@ module.exports = function (sequelize, DataTypes) {
   
 
   Player.associate = function(models) {
-    Player.belongsTo(models.User, {foreignKey: 'UserId'})
-    Player.belongsToMany(models.Court, {through: 'Reservation', foreignKey: 'CourtId'})
+    Player.belongsTo(models.User, {foreignKey: 'PlayerId'})
+    Player.hasMany(models.Reservation, {onDelete: "cascade"})
   };
-
-  // Player.associate = models => {
-  //   Player.hasMany(models.Reservation, {
-  //     onDelete : "cascade"
-  //   });
-  
-
-  //   Player.belongsTo(models.User, {
-  //     foreignKey: {
-  //       allowNull: false,
-  //     }
-  //   })
-  // };
 
   return Player;
 };

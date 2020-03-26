@@ -1,14 +1,16 @@
 <section id="header">
   <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top ">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="/members"><p><img src="images/raven-logo.png"> Ravens Athletic Club</p> </a>
+        <a class="navbar-brand" href="/members">
+          <p><img src="images/raven-logo.png"> Ravens Athletic</p>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
 
             <li class="nav-item ">
@@ -22,8 +24,8 @@
                 Hours</a>
             </li>
 
-            <a class="btn btn-primary logout" href="/logout" role="button" style="font-size: 15px;">Log
-              Out</a>
+            <li class=" nav-item"><a class="nav_option btn btn-dark logout" href="/logout" role="button">Log
+                Out</a></li>
           </ul>
 
         </div>
@@ -37,42 +39,80 @@
 <section class="main">
   <div class="container-fluid ">
     <div class="row">
-      <div class="col-sm-4 mt-4">
-        <div class="card profile-card-5 m-5 p-5">
-          <div class="card-img-block">
-            <img class="card-img-top" src="https://images.unsplash.com/photo-1517832207067-4db24a2ae47c"
+      <div class="col-sm-4 ">
+        <div class="card profile-card-5 ml-5 mt-5 pt-5">
+          <div class="card-img-block text-center">
+            <img class="card-img-top" src="images/imagePlaceHolder.png"
               alt="Card image cap">
           </div>
-          <div class="card-body pt-0">
+          <div class="card-body memberProfile pt-0 ml-5">
             <h5 class="card-title">User Profile</h5>
 
-            <p class="userInfo" id="username"> Username : {{ user_name }}</p>
-            <p class="userInfo" id="name"> Name : {{ name }}</p>
-            <p class="userInfo"  id="memberid"> Member id : {{ member_id }}</p>
-            <p class="userInfo"  id="membersince"> Member since : {{ member_since }}</p>
-             <p class="userInfo"  id="favorite-activity"> Favorite Activity : {{ favorite_activity }}</p>
-            <p class="userInfo"  id="skill-input"> Skill Level : {{ skill_level }}</p>
+            <form class="form">
+              <div class="form-group">
+                <label class="control-label">
+                  <h4>Username</h4>
+                </label>
 
-            {{#if partner}}
-            <p class="userInfo"  id="partner"> Looking for tennis partner : YES</p>
-            {{else}}
-            <p class="userInfo"  id="partner"> Looking for tennis partner : NO</p>
-            {{/if}}
-            
-            <!-- <p><i class="fa fa-map-marker" aria-hidden="true"></i> New Jersey, USA.</p> -->
+                <input class="form-control mt-0" id="username" type="text" value="{{ user_name }}" disabled>
 
-            <a href="#" class="btn btn-primary">Edit</a>
+                <label class="control-label">
+                  <h4>Name</h4>
+                </label>
+                <input class="form-control" id="name" type="text" value="{{ name }}" disabled>
+
+                <label class="control-label">
+                  <h4>Member id</h4>
+                </label>
+                <input class="form-control"  type="text" value="{{ member_id }}" disabled>
+
+                <label class="control-label">
+                  <h4>Member since</h4>
+                </label>
+                <input class="form-control"  type="text" value="{{ member_since }}" disabled>
+
+                <label class="control-label">
+                  <h4>Favorite Activity</h4>
+                </label>
+                <input class="form-control" id="favoriteactivity" type="text" value="{{ favorite_activity }}" disabled>
+
+                <label class="control-label">
+                  <h4>Skill Level</h4>
+                </label>
+                <input class="form-control" id="skilllevel" type="text" value="{{ skill_level }}" disabled>
+
+                {{#if partner}}
+                <label class="control-label">
+                  <h4>Looking for tennis partner </h4>
+                </label>
+                <input class="form-control userInfo" id="partner" type="text" value="Yes" disabled>
+
+                {{else}}
+                <label class="control-label">
+                  <h4>Looking for tennis partner </h4>
+                </label>
+                <input class="form-control userInfo" id="partner" type="text" value="No" disabled="true">
+                {{/if}}
+
+              </div>
+            </form>
+
+            <div class="text-center">
+
+              <button href=""  class="btn btn-dark" id="editUser">Edit</button>
+                <button class="btn btn-dark" id="saveUser" >Save</button>
+            </div>
           </div>
         </div>
 
       </div>
-      <div class="detail-info col-sm-7 bg-light m-5 p-5 border-rounded">
+      <div class="detail-info col-sm-7 bg-light mt-5 p-5">
         <div class="card">
-          <div class="card-header bg-primary ">
+          <div class="card-header detailHeader">
             <div class="row">
               <div class="col-sm-12 text-center pb-2">
-                <h2 class="pageHeader">Ravens Athletic Club</h2>
-                <h4 id="home_name">Welcome, {{ name }} </h4>
+                <h2 class="pageHeader  text-white">Ravens Athletic Club</h2>
+                <h4 class=" text-white" id="home_name">Welcome, {{ name }} </h4>
               </div>
             </div>
           </div>

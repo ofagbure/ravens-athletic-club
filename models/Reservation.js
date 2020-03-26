@@ -11,6 +11,10 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false,
     },
+    partner: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
     CourtId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -18,27 +22,24 @@ module.exports = function (sequelize, DataTypes) {
     PlayerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    PlayerName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    PartnerId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    PartnerName: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
   });
 
   Reservation.associate = function(models) {
-    Reservation.belongsTo(models.Court, {foreignKey: 'CourtId'})
     Reservation.belongsTo(models.Player, {foreignKey: 'PlayerId'})
   };
-
-  // Reservation.associate = models => {
-  //   Reservation.belongsTo(models.Court, {
-  //     // foreignKey: {
-  //     //   allowNull: true,
-  //     // }
-  //   });
-  //   Reservation.belongsTo(models.Player, {
-  //     // foreignKey: {
-  //     //   allowNull: true,
-  //     // }
-  //     });
-  // };
-
 
   return Reservation;
 };

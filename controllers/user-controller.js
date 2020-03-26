@@ -28,7 +28,7 @@ let userId;
       })
       .then(function (data) {
         userId = data.id;
-        // localStorage.setItem('userId', data.id);
+
         db.Player.create({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -36,7 +36,7 @@ let userId;
             skill_level: req.body.skill_level,
             activity: req.body.activity,
             courtId: req.body.courtId,
-            UserId: data.id
+            PlayerId: data.id
           })
           .then(function () {
             

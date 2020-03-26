@@ -1,8 +1,6 @@
 
 const Sequelize = require("sequelize");
 
-
-
 module.exports = function(sequelize, DataTypes) {
 const Court = sequelize.define('Court', {
     court_numb:{
@@ -15,16 +13,10 @@ const Court = sequelize.define('Court', {
     }
   });
 
-  Court.associate = function(models) {
-    Court.belongsToMany(models.Player, {through: 'Reservation', foreignKey: 'PlayerId'})
-  };
-
   Court.addHook("afterCreate", function(user) {
     Court.bulkCreate(data);
 
   });
-
-
 
     return Court;
 };

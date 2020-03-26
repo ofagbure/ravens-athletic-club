@@ -99,52 +99,40 @@ $(document).ready(function () {
         },
     ];
 
-
-    console.log("indeeexxxxx = " + JSON.stringify(hourlyData));
-    /////
-
-    console.log("Moment(hourlyData[index].startTime).format =" + moment(hourlyData[index].startTime).format("YYYY-MM-DD HH:mm:ss"));
     const start_time = moment(hourlyData[index].startTime).format("YYYY-MM-DD HH:mm:ss");
     const end_time = moment(hourlyData[index].endTime).format("YYYY-MM-DD HH:mm:ss");
 
 
     $(".reserve").on("click", function () {
-        const index = parseInt(localStorage.getItem("court"));
-        console.log("reservation index = " + index);
-        const court = {
-            start_time: start_time,
-            end_time: end_time,
-            court_numb: parseInt(localStorage.getItem("court")),
-            player_id: parseInt(localStorage.getItem("userId"))
-        }
- 
-        //API CALL to reserve A COURT
-        $.post("/api/reserve", court)
+        //make API call to get current user info
+        const playerId = parseInt(localStorage.getItem("userId"));
+        const courtId = parseInt(localStorage.getItem("court"));
+
+        //API CALL to save user info
+        $.get(`/api/userProfile/${playerId}`)
             .then(res => {
+                const court = {
+                    start_time: start_time,
+                    end_time: end_time,
+                    partner: true,
+                    CourtId: parseInt(courtId),
+                    PlayerId: parseInt(playerId),
+                    PlayerName: `${res.first_name} ${res.last_name}`
+                }
 
-                res.render("/reserve");
-                // If there's an error, handle it by throwing up a bootstrap alert
+                //API CALL to reserve A COURT
+                $.post("/api/reserve", court)
+                    .then(res => {
+                        window.location.replace("/reserve");
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             })
-            .catch();
-
-
-
-//DELETE THIS
-        // $.ajax({
-        //   url: "/api/court",
-        //   type: "POST",
-        //   data: court
-        // }).then(function (data) {
-        //   console.log("we got yhis back ", data);
-
-        //   $.ajax({
-        //     url: "/api/court/" + data.court_numb,
-        //     type: "GET"
-        //   }).then(function (data) {
-        //     console.log("second ajax ", data);
-        //   })
-
-        // })
+            .catch(err => {
+                console.log(err);
+            });
     })
 
-});
+
+})

@@ -7,6 +7,7 @@
 const path = require("path");
 const router = require('express').Router();
 const db = require("../models");
+const moment = require("moment");
 
 // Requiring our custom middleware for checking if a user is logged in
 let isAuthenticated = require("../config/middleware/isAuthenticated");
@@ -38,7 +39,7 @@ function userAccess(req, res) {
 };
 
 
-// helper for / and blog routes
+
 function loginUser(req, res) {
   // If the user already has an account send them to the members page
   if (req.user) {
@@ -49,187 +50,374 @@ function loginUser(req, res) {
 };
 
 
-// helper for / and blog routes
+
 async function renderMemberPage(req, res) {
   // helper for / and blog routes
 
   if (req.user) {
-     db.Player.findOne({
-      
-          UserId: req.user.id
+    db.Player.findOne({
+      where: {
+        PlayerId: req.user.id
+      }
+    }).then(function (userData) {
 
-      }).then(function (userData) {
-        const userProf ={
+      //get all reserations
+      db.Reservation.findAll({
+        where: {
+          PlayerId: req.user.id
+        },
+        include: [{
+          model: db.Player,
+        }],
+        limit: 10
+
+      }).then((reservations) => {
+
+        //list of all reservations by user
+        const reserationsList = reservations.map(reservation => {
+          return {
+            court: reservation.CourtId,
+            start: moment(reservation.start_time).format('LLL'),
+            end: moment(reservation.end_time).format('LLL'),
+            PlayerId: reservation.PlayerId,
+            PlayerName: reservation.PlayerName,
+            PartnerName: reservation.PartnerName
+          }
+        })
+
+        //list of users a user is partnered with 
+        const partnerReservationList = [];
+        reservations.forEach(reservation => {
+          if (reservation.PartnerId !== null) {
+            partnerReservationList.push({
+              reservationId: reservation.id,
+              court: reservation.CourtId,
+              startTime: moment(reservation.start_time).format('LLL'),
+              end: moment(reservation.end_time).format('LLL'),
+              PlayerId: reservation.PlayerId,
+              name: `${reservation.Player.first_name} ${reservation.Player.last_name} `,
+              PartnerName: reservation.PartnerName,
+              skillLevel: reservation.Player.skill_level
+            })
+          }
+        });
+
+        const userProf = {
           ...req.user,
           ...userData.dataValues
         }
         const playerDataRender = {
           user_name: userProf.email,
-          member_id: userProf.UserId,
-          member_since: userProf.createdAt,
-           name : `${userProf.first_name} ${userProf.last_name}`,
+          member_id: userProf.PlayerId,
+          member_since: moment(userProf.createdAt).format('LL'),
+          name: `${userProf.first_name} ${userProf.last_name}`,
           need_partner: userProf.need_partner,
           skill_level: userProf.skill_level,
           favorite_activity: userProf.activity,
+          reserationsList: reserationsList,
+          partnerReservationList: partnerReservationList
         }
+
         res.render("members", playerDataRender);
-      })
-      .catch(err => {
+      }).catch(err => {
         res.status(401).json(err);
       });
+    }).catch(err => {
+      res.status(401).json(err);
+    });
   }
-
-
-
-};
-
+}
 
 //get user profile data 
-function userProfileData (req){
+function userProfileData(req) {
+  //find specific user 
   db.Player.findOne({
-      
-    UserId: req.user.id
-
-}).then(function (userData) {
-  const userProf ={
-    ...req.user,
-    ...userData.dataValues
-  }
-  const playerDataRender = {
-    user_name: userProf.email,
-    member_id: userProf.UserId,
-    member_since: userProf.createdAt,
-     name : `${userProf.first_name} ${userProf.last_name}`,
-    need_partner: userProf.need_partner,
-    skill_level: userProf.skill_level,
-    favorite_activity: userProf.activity,
-  }
- return playerDataRender;
-})
-.catch(err => {
-  res.status(401).json(err);
-});
+      where: {
+        PlayerId: req.user.id
+      }
+    }).then(function (userData) {
+      const userProf = {
+        ...req.user,
+        ...userData.dataValues
+      }
+      const playerDataRender = {
+        user_name: userProf.email,
+        member_id: userProf.PlayerId,
+        member_since: moment(userProf.createdAt).format('LL'),
+        name: `${userProf.first_name} ${userProf.last_name}`,
+        need_partner: userProf.need_partner,
+        skill_level: userProf.skill_level,
+        favorite_activity: userProf.activity,
+      }
+      return playerDataRender;
+    })
+    .catch(err => {
+      res.status(401).json(err);
+    });
 }
 
 //render tennis page
 function tennisCourtList(req, res) {
 
-    if (req.user) {
-      db.Player.findOne({
-       
-           UserId: req.user.id
- 
-       }).then(function (userData) {
-         const userProf ={
-           ...req.user,
-           ...userData.dataValues
-         }
-         const playerDataRender = {
-           user_name: userProf.email,
-           member_id: userProf.UserId,
-           member_since: userProf.createdAt,
-            name : `${userProf.first_name} ${userProf.last_name}`,
-           need_partner: userProf.need_partner,
-           skill_level: userProf.skill_level,
-           favorite_activity: userProf.activity,
-         }
-         res.render("tennis", playerDataRender);
-       })
-       .catch(err => {
-         res.status(401).json(err);
-       });
-   }
+  if (req.user) {
+    db.Player.findOne({
+      where: {
+        PlayerId: req.user.id
+      }
+    }).then(function (userData) {
+
+      //get all reserations
+      db.Reservation.findAll({
+        where: {
+          PlayerId: req.user.id
+        }
+      }).then((reservations) => {
+        const reserationsList = reservations.map(reservation => {
+          return {
+            court: reservation.CourtId,
+            start: moment(reservation.start_time).format('LLL'),
+            end: moment(reservation.end_time).format('LLL'),
+            PlayerId: reservation.PlayerId,
+            PlayerName: reservation.PlayerName,
+            PartnerName: reservation.PartnerName
+          }
+        })
+        console.log("am here")
+        //find reservations with partner enabled
+        db.Reservation.findAll({
+          // where: {
+          //   partner: 1,          
+          // },
+          // include : [Player]
+          where: {
+            partner: 1,
+          },
+          include: [{
+            model: db.Player,
+          }],
+          limit: 10
+
+        }).then((partnerRequestListData) => {
+          console.log('Player+reservation = ' + JSON.stringify(partnerRequestListData))
+          const partnerRequestList = [];
+          partnerRequestListData.forEach(partnerRequest => {
+            if (partnerRequest.PlayerId !== req.user.id) {
+              partnerRequestList.push({
+                reservationId: partnerRequest.id,
+                court: partnerRequest.CourtId,
+                startTime: moment(partnerRequest.start_time).format('LLL'),
+                end: moment(partnerRequest.end_time).format('LLL'),
+                PlayerId: partnerRequest.PlayerId,
+                name: `${partnerRequest.Player.first_name} ${partnerRequest.Player.last_name} `,
+                skillLevel: partnerRequest.Player.skill_level
+              })
+            }
+          })
+
+          //get player name and skill level 
+          const userProf = {
+            ...req.user,
+            ...userData.dataValues
+          }
+          const playerDataRender = {
+            user_name: userProf.email,
+            member_id: userProf.PlayerId,
+            member_since: moment(userProf.createdAt).format('LL'),
+            name: `${userProf.first_name} ${userProf.last_name}`,
+            need_partner: userProf.need_partner,
+            skill_level: userProf.skill_level,
+            favorite_activity: userProf.activity,
+            reserationsList: reserationsList,
+            partnerRequestList: partnerRequestList,
+          }
+          res.render("tennis", playerDataRender);
+        })
+
+
+
+
+      }).catch(err => {
+        res.status(401).json(err);
+      });
+
+
+
+    }).catch(err => {
+      res.status(401).json(err);
+    });
   }
+}
 
 
 //render tennis page
 function poolList(req, res) {
   if (req.user) {
     db.Player.findOne({
-     
-         UserId: req.user.id
+      where: {
+        PlayerId: req.user.id
+      },
+      limit: 10
+    }).then(function (userData) {
 
-     }).then(function (userData) {
-       const userProf ={
-         ...req.user,
-         ...userData.dataValues
-       }
-       const playerDataRender = {
-         user_name: userProf.email,
-         member_id: userProf.UserId,
-         member_since: userProf.createdAt,
-          name : `${userProf.first_name} ${userProf.last_name}`,
-         need_partner: userProf.need_partner,
-         skill_level: userProf.skill_level,
-         favorite_activity: userProf.activity,
-       }
-       res.render("pool", playerDataRender);
-     })
-     .catch(err => {
-       res.status(401).json(err);
-     });
- }
+      //get all reserations
+
+      // console.log("reservation api", req)
+      db.Reservation.findAll({
+        where: {
+          PlayerId: req.user.id
+        }
+      }).then((reservations) => {
+        const reserationsList = reservations.map(reservation => {
+          return {
+            court: reservation.CourtId,
+            start: moment(reservation.start_time).format('LLL'),
+            end: moment(reservation.end_time).format('LLL'),
+            PlayerId: reservation.PlayerId,
+            PlayerName: reservation.PlayerName,
+            PartnerName: reservation.PartnerName
+          }
+        })
+
+        const userProf = {
+          ...req.user,
+          ...userData.dataValues
+        }
+        const playerDataRender = {
+          user_name: userProf.email,
+          member_id: userProf.PlayerId,
+          member_since: moment(userProf.createdAt).format('LL'),
+          name: `${userProf.first_name} ${userProf.last_name}`,
+          need_partner: userProf.need_partner,
+          skill_level: userProf.skill_level,
+          favorite_activity: userProf.activity,
+          reserationsList: reserationsList
+        }
+        res.render("pool", playerDataRender);
+      }).catch(err => {
+        res.status(401).json(err);
+      });
+
+
+
+    }).catch(err => {
+      res.status(401).json(err);
+    });
+  }
 }
 
 //render tennis page
 function basketBallList(req, res) {
   if (req.user) {
     db.Player.findOne({
-     
-         UserId: req.user.id
+      where: {
+        PlayerId: req.user.id
+      },
+      limit: 10
+    }).then(function (userData) {
 
-     }).then(function (userData) {
-       const userProf ={
-         ...req.user,
-         ...userData.dataValues
-       }
-       const playerDataRender = {
-         user_name: userProf.email,
-         member_id: userProf.UserId,
-         member_since: userProf.createdAt,
-          name : `${userProf.first_name} ${userProf.last_name}`,
-         need_partner: userProf.need_partner,
-         skill_level: userProf.skill_level,
-         favorite_activity: userProf.activity,
-       }
-       res.render("basketbaLL", playerDataRender);
-     })
-     .catch(err => {
-       res.status(401).json(err);
-     });
- }
+      //get all reserations
+
+      // console.log("reservation api", req)
+      db.Reservation.findAll({
+        where: {
+          PlayerId: req.user.id
+        }
+      }).then((reservations) => {
+        const reserationsList = reservations.map(reservation => {
+          return {
+            court: reservation.CourtId,
+            start: moment(reservation.start_time).format('LLL'),
+            end: moment(reservation.end_time).format('LLL'),
+            PlayerId: reservation.PlayerId,
+            PlayerName: reservation.PlayerName,
+            PartnerName: reservation.PartnerName
+          }
+        })
+
+        const userProf = {
+          ...req.user,
+          ...userData.dataValues
+        }
+        const playerDataRender = {
+          user_name: userProf.email,
+          member_id: userProf.PlayerId,
+          member_since: moment(userProf.createdAt).format('LL'),
+          name: `${userProf.first_name} ${userProf.last_name}`,
+          need_partner: userProf.need_partner,
+          skill_level: userProf.skill_level,
+          favorite_activity: userProf.activity,
+          reserationsList: reserationsList
+        }
+        res.render("basketball", playerDataRender);
+      }).catch(err => {
+        res.status(401).json(err);
+      });
+
+
+
+    }).catch(err => {
+      res.status(401).json(err);
+    });
+  }
   // res.render('login');
 }
+
 // reservation page
-// Here we've add our isAuthenticated middleware to this route.
-// If a user who is not logged in tries to access this route they will be redirected to the signup page
 function reservation(req, res) {
 
   if (req.user) {
     db.Player.findOne({
-     
-         UserId: req.user.id
 
-     }).then(function (userData) {
-       const userProf ={
-         ...req.user,
-         ...userData.dataValues
-       }
-       const playerDataRender = {
-         user_name: userProf.email,
-         member_id: userProf.UserId,
-         member_since: userProf.createdAt,
-          name : `${userProf.first_name} ${userProf.last_name}`,
-         need_partner: userProf.need_partner,
-         skill_level: userProf.skill_level,
-         favorite_activity: userProf.activity,
-       }
-       res.render("reserve", playerDataRender);
-     })
-     .catch(err => {
-       res.status(401).json(err);
-     });
- }
+        PlayerId: req.user.id
+
+      }).then(function (userData) {
+        const userProf = {
+          ...req.user,
+          ...userData.dataValues
+        }
+        const playerDataRender = {
+          user_name: userProf.email,
+          member_id: userProf.PlayerId,
+          member_since: moment(userProf.createdAt).format('LL'),
+          name: `${userProf.first_name} ${userProf.last_name}`,
+          need_partner: userProf.need_partner,
+          skill_level: userProf.skill_level,
+          favorite_activity: userProf.activity,
+        }
+        res.render("reserve", playerDataRender);
+      })
+      .catch(err => {
+        res.status(401).json(err);
+      });
+  }
+  // res.render('login');
+};
+
+
+function reservationByUser(id) {
+  db.Reservation.findAll({
+      where: {
+        PlayerId: id
+      }
+    }).then(function (reservation) {
+      const userProf = {
+        reservation
+      }
+      const playerDataRender = {
+        user_name: userProf.email,
+        member_id: userProf.PlayerId,
+        member_since: moment(userProf.createdAt).format('LL'),
+        name: `${userProf.first_name} ${userProf.last_name}`,
+        need_partner: userProf.need_partner,
+        skill_level: userProf.skill_level,
+        favorite_activity: userProf.activity,
+      }
+      res.render("reserve", playerDataRender);
+    })
+    .catch(err => {
+      res.status(401).json(err);
+    });
+
   // res.render('login');
 };
 

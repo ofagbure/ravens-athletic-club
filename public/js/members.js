@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
   //user profile locators
@@ -9,34 +9,93 @@ $(document).ready(function() {
   let partner = $("#partner");
   let skillLevel = $("#skill-input");
   let favoriteActivity = $("#favorite-activity");
+  let cancelJoin = $(".cancelJoin");
+
+  let currentTime = $("#current_time");
+
+  //add date to the jumbotron in the form -> Saturday, January 11th
+  var todayDate = moment().format("MMMM Do YYYY, h:mm:ss a");
+  currentTime.text(todayDate);
+
+  //cancel join partner reservation
+  cancelJoin.on("click", function () {
+
+    let reservationId = parseInt($(this).attr("data-reservationId"));
+    console.log("reservationId = " + reservationId)
+    const PlayerId = parseInt(localStorage.getItem("userId"));
 
 
-//   $.get("/api/user_data").then(data1 => {
-//     $.get(`/api/userProfile/${data1.id}`).then(data2 => {
-//       username.text(username.text() + data1.email);
-//       memberid.text(memberid.text() + data1.id);
-//       membersince.text(membersince.text() + data2.createdAt);
-//       name.text(name.text() + `${data2.first_name} ${data2.last_name}`);
-//       partner.text(partner.text() + data2.need_partner);
-//       skillLevel.text(skillLevel.text() + data2.skill_level);
-//       favoriteActivity.text(favoriteActivity.text() + data2.activity);
-//   });
+    const reservation = {
+      reservationId: parseInt(reservationId),
+      PartnerId: null,
+      partner: 1,
+      PartnerName: null,
+    }
 
-// });
+    //API CALL to reserve A COURT
+    $.post("/api/reserve/update", reservation) .then(res => {
+      window.location.replace("/reserve");
+        // If there's an error, handle it by throwing up a bootstrap alert
+      })
+      .catch();
+  })
 
 
-// const data = {
-//   user_name: data1.email,
-//   name : `${data2.first_name} ${data2.last_name}`,
-//   member_id : data2.player_id,
-//   member_since : member_since,
-//   skill_level : skill_level,
-//   partner: partner,
-// }
+  //update user
+  const editUser = $("#editUser");
 
-// $(".court").on("click", function () {
-//   console.log("you cliked", $(this).attr("name"));
-//   localStorage.setItem("court", $(this).attr("name"));
-//   window.location.replace("/reserve");
-// })
+  editUser.on("click", function (event) {
+    event.preventDefault();
+
+    const name = $("#name");
+    const favoriteactivity = $("#favoriteactivity");
+    const skilllevel = $("#skilllevel");
+    const partner = $("#partner");
+
+    //enable input fields
+    name.prop("disabled", false);
+    favoriteactivity.prop("disabled", false);
+    skilllevel.prop("disabled", false);
+    partner.prop("disabled", false);
+
+  });
+  
+  //save user update
+  const saveUser = $("#saveUser");
+
+  saveUser.on("click", function () {
+
+    const name = $("#name");
+    const favoriteactivity = $("#favoriteactivity");
+    const skilllevel = $("#skilllevel");
+    const partner = $("#partner");
+
+    //split name into firstname and lastname\
+    const nameVal = name.val().trim();
+
+    //capture values
+    const userData = {
+      first_name: nameVal.slice(0, nameVal.indexOf(" ")),
+      last_name: nameVal.slice(nameVal.indexOf(" "), nameVal.length),
+      skill_level: skilllevel.val().trim(),
+      activity: favoriteactivity.val().trim(),
+      need_partner: partner.val().trim(),
+    }
+
+    //disable input fields
+    name.prop("disabled", true);
+    favoriteactivity.prop("disabled", true);
+    skilllevel.prop("disabled", true);
+    partner.prop("disabled", true);
+    const playerId = parseInt(localStorage.getItem("userId"));
+
+    //make API request to update user
+    $.post(`/api/userProfile/${playerId}`, userData)
+      .then(res => {
+        window.location.replace("/members");
+      })
+      .catch(err => {
+        console.log(err);
+    });
+  })
 });
