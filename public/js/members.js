@@ -13,6 +13,8 @@ $(document).ready(function () {
 
   let currentTime = $("#current_time");
 
+  let paginatePartnerReservation = $(".paginate");
+
   //add date to the jumbotron in the form -> Saturday, January 11th
   var todayDate = moment().format("MMMM Do YYYY, h:mm:ss a");
   currentTime.text(todayDate);
@@ -33,9 +35,9 @@ $(document).ready(function () {
     }
 
     //API CALL to reserve A COURT
-    $.post("/api/reserve/update", reservation) .then(res => {
-      window.location.replace("/reserve");
-        // If there's an error, handle it by throwing up a bootstrap alert
+    $.post("/api/reserve/update", reservation).then(res => {
+        //refreshh members page
+        location.reload(true);
       })
       .catch();
   })
@@ -59,7 +61,7 @@ $(document).ready(function () {
     partner.prop("disabled", false);
 
   });
-  
+
   //save user update
   const saveUser = $("#saveUser");
 
@@ -92,10 +94,17 @@ $(document).ready(function () {
     //make API request to update user
     $.post(`/api/userProfile/${playerId}`, userData)
       .then(res => {
-        window.location.replace("/members");
+        //refreshh members page
+        location.reload(true);
       })
       .catch(err => {
         console.log(err);
-    });
-  })
+      });
+  });
+
+
+  // //pagination 
+  // paginatePartnerReservation.on('click', function(){
+
+  // })
 });

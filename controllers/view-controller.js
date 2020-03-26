@@ -73,52 +73,72 @@ async function renderMemberPage(req, res) {
 
       }).then((reservations) => {
 
-        //list of all reservations by user
-        const reserationsList = reservations.map(reservation => {
-          return {
-            court: reservation.CourtId,
-            start: moment(reservation.start_time).format('LLL'),
-            end: moment(reservation.end_time).format('LLL'),
-            PlayerId: reservation.PlayerId,
-            PlayerName: reservation.PlayerName,
-            PartnerName: reservation.PartnerName
-          }
-        })
+        //find all reservation current user has partnered with as a partner 
+        db.Reservation.findAll({
+          where: {
+            PartnerId: req.user.id
+          },
+          include: [{
+            model: db.Player,
+          }],
+          limit: 10
 
-        //list of users a user is partnered with 
-        const partnerReservationList = [];
-        reservations.forEach(reservation => {
-          if (reservation.PartnerId !== null) {
-            partnerReservationList.push({
-              reservationId: reservation.id,
+        }).then((partneredReservations) => {
+
+          //list of all reservations by user
+          const reserationsList = reservations.map(reservation => {
+            return {
               court: reservation.CourtId,
-              startTime: moment(reservation.start_time).format('LLL'),
+              start: moment(reservation.start_time).format('LLL'),
               end: moment(reservation.end_time).format('LLL'),
               PlayerId: reservation.PlayerId,
-              name: `${reservation.Player.first_name} ${reservation.Player.last_name} `,
-              PartnerName: reservation.PartnerName,
-              skillLevel: reservation.Player.skill_level
-            })
+              PlayerName: reservation.PlayerName,
+              PartnerName: reservation.PartnerName
+            }
+          })
+
+//combine the two reservations i.e reservations as main player and reservation as partner
+const allReservations = [...reservations, ...partneredReservations];
+          //list of users a user is partnered with 
+          const partnerReservationList = [];
+          allReservations.forEach(reservation => {
+            if (reservation.PartnerId !== null) {
+              partnerReservationList.push({
+                reservationId: reservation.id,
+                court: reservation.CourtId,
+                startTime: moment(reservation.start_time).format('LLL'),
+                end: moment(reservation.end_time).format('LLL'),
+                PlayerId: reservation.PlayerId,
+                name: `${reservation.Player.first_name} ${reservation.Player.last_name} `,
+                PartnerName: reservation.PartnerName,
+                skillLevel: reservation.Player.skill_level
+              })
+            }
+          });
+
+          const userProf = {
+            ...req.user,
+            ...userData.dataValues
           }
+          const playerDataRender = {
+            user_name: userProf.email,
+            member_id: userProf.PlayerId,
+            member_since: moment(userProf.createdAt).format('LL'),
+            name: `${userProf.first_name} ${userProf.last_name}`,
+            need_partner: userProf.need_partner,
+            skill_level: userProf.skill_level,
+            favorite_activity: userProf.activity,
+            reserationsList: reserationsList,
+            partnerReservationList: partnerReservationList
+          }
+
+          res.render("members", playerDataRender);
+
+        }).catch(err => {
+          res.status(401).json(err);
         });
 
-        const userProf = {
-          ...req.user,
-          ...userData.dataValues
-        }
-        const playerDataRender = {
-          user_name: userProf.email,
-          member_id: userProf.PlayerId,
-          member_since: moment(userProf.createdAt).format('LL'),
-          name: `${userProf.first_name} ${userProf.last_name}`,
-          need_partner: userProf.need_partner,
-          skill_level: userProf.skill_level,
-          favorite_activity: userProf.activity,
-          reserationsList: reserationsList,
-          partnerReservationList: partnerReservationList
-        }
 
-        res.render("members", playerDataRender);
       }).catch(err => {
         res.status(401).json(err);
       });
