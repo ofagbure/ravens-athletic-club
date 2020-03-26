@@ -6,7 +6,7 @@
       <div class="card">
         <div class="card-header text-center">
           <h3 id="home_name">Your coming reservations </h3>
-          <h4 id ="current_time"></h4>
+          <h4 id="current_time"></h4>
         </div>
         <div class="card-body">
 
@@ -34,7 +34,7 @@
 
     </div>
     <div class="col-sm-4 text-center">
-         <img class="logoImage" src="images/clubImage.png">
+      <img class="logoImage" src="images/clubImage.png">
       {{!-- <div class="card">
         <div class="card-body pl-5">
           <img class="logoImage" src="images/clubImage.png">
@@ -47,7 +47,7 @@
     <div class="col-sm-12">
       <div class="card">
         <div class="card-header">
-      <h3 class="pl-5" id="home_name">Next Game with </h3>
+          <h3 class="pl-5" id="home_name">Next Game with </h3>
         </div>
         <div class="card-body">
           <table class="table table-bordered">
@@ -71,12 +71,21 @@
                 <td>{{this.startTime}}</td>
                 <td>{{this.skillLevel}}</td>
                 <td>{{this.end}}</td>
-                <td><div class="btn btn-danger cancelJoin" data-reservationId = {{this.reservationId}}>Cancel</div></td>
+                <td>
+                  <div class="btn btn-danger cancelJoin" data-reservationId={{this.reservationId}}>Cancel</div>
+                </td>
               </tr>
               {{/each}}
 
             </tbody>
           </table>
+          {{!-- <ul class="pagination">
+            <li><a class="paginate" >1</a></li>
+            <li class="active"><a  class="paginate">2</a></li>
+            <li><a class="paginate">3</a></li>
+            <li><a class="paginate">4</a></li>
+            <li><a class="paginate">5</a></li>
+          </ul> --}}
         </div>
       </div>
     </div>

@@ -123,7 +123,9 @@ $(document).ready(function () {
                 //API CALL to reserve A COURT
                 $.post("/api/reserve", court)
                     .then(res => {
-                        window.location.replace("/reserve");
+                        //refreshh members page
+                        location.reload(true);
+                        // window.location.replace("/reserve");
                     })
                     .catch(err => {
                         console.log(err);

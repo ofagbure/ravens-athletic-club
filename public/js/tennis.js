@@ -22,7 +22,7 @@ $(document).ready(function () {
       .then(res => {
 
         const PartnerName = `${res.first_name} ${res.last_name}`;
-        
+
         const reservation = {
           reservationId: parseInt(reservationId),
           PartnerId: parseInt(PlayerId),
@@ -33,9 +33,10 @@ $(document).ready(function () {
         //API CALL to reserve A COURT
         $.post("/api/reserve/update", reservation)
           .then(res => {
-            window.location.replace("/tennis");
-            // res.render("/tennis");
-            // If there's an error, handle it by throwing up a bootstrap alert
+            //refreshh members page
+            location.reload(true);
+            // window.location.replace("/tennis");
+
           })
           .catch();
       })
