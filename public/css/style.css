@@ -70,7 +70,10 @@ ul {
 
 .main {
   position: relative;
-  background: url("https://images.unsplash.com/photo-1573294184805-e3044b161ace?ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80");
+  /* background: url("https://images.unsplash.com/photo-1573294184805-e3044b161ace?ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80"); */
+ background: url("https://cdn.pixabay.com/photo/2015/09/05/01/00/tennis-923659_960_720.jpg");
+
+  
   min-height: 100vh;
   background-size: cover;
   background-position: center;
