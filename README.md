@@ -1,18 +1,15 @@
 # Ravens Athletic Club
 
-You can visit the deployed site here 
+You can visit the deployed site [here](https://secure-beach-74289.herokuapp.com/)
 
 ## Table of Contents 
 
-* [Description](#Description)
 * [User Story](#UserStory)
 * [Acceptable Criteria](#AcceptableCriteria)
+* [Description](#Description)
 * [Technologies Used](#TechnologiesUsed) 
 * [License](#License)
 * [Badges](#Badges)
-
-## Description 
-This is an application for an athletic club containing tennis courts, a basketball court, and a pool. The application allows users to sign in and book a tennis court. If available/ appropriate, the app will also suggest partners for play.
 
 ## User Story
 AS an athletic club manager
@@ -33,6 +30,20 @@ When I log into the application
 I get the option to reserve a court
 If there is a court available at the time, I will get a confirmation email, and if I had indicated that I would like a partner, a partner is suggested for me
 If there is no court available, I am added to the waitlist and moved up if a reservation is cancelled
+
+## Description 
+This is an application for an athletic club containing tennis courts, a basketball court, and a pool. At its most basic level, the application requires users to either create an account, or sign into a previously created account
+
+![landingPage](./public/images/landing.png) 
+
+Once logged in, users can view their profile, make edits, as well as see any reservations they may have booked. 
+
+![ProfilePage](./public/images/profile.png)
+
+In the event that a user would like to book a tennis court, if available/ appropriate, the app will also suggest partners for play.
+
+![Reservations](./public/images/reservations.png)
+
 
 ## Technologies Used
 This application is built with standard HTML5, and CSS.
